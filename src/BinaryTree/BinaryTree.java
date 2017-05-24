@@ -1,121 +1,87 @@
 package BinaryTree;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.List;
 
-public class BinaryTree <Type extends Comparable<Type>> {
+public class BinaryTree<Type extends Comparable<Type>>{
 
+	private Node head;
+	private Node iterator;
 	
-	protected Element<Type> thisElement;
-	
-	protected BinaryTree<Type> branchLeft;
-	protected BinaryTree<Type> branchRight;
-	
-	//Workaround:
-	List<Element<Type>> tempList = null;
-	List<Element<Type>> outputList = null;
-	
-	
-	public boolean empty(){
-		return (branchLeft != null && branchRight != null);
+	public BinaryTree(Node head){		
+		this.head = head;
+		this.iterator = head;
 	}
 	
-	public BinaryTree<Type> left(){
-		return branchLeft;
-	}
-	
-	public BinaryTree<Type> right(){
-		return branchRight;
-	}
-	
-	public Element<Type> value(){
-		return thisElement;
-	}
-	
-	public BinaryTree(Element<Type> e){
-		branchLeft 	= new BinaryTree<Type>();
-		branchRight = new BinaryTree<Type>();
-		thisElement = e;
-	}
-	
-	public BinaryTree(Element<Type> e, BinaryTree<Type> branchLeft, BinaryTree<Type> branchRight){
-		thisElement = e;
-		this.branchLeft = branchLeft;
-		this.branchRight = branchRight;
-	}
-	
-	public BinaryTree(Type e, BinaryTree<Type> branchLeft, BinaryTree<Type> branchRight){
-		thisElement = new Element<Type>(e);
-		this.branchLeft = branchLeft;
-		this.branchRight = branchRight;
-	}
-	
-	public BinaryTree(){
-		thisElement = null;
-		branchLeft = null;
-		branchRight = null;
-	}
-	
-	public List<Element<Type>> traverseInOrder(List<Element<Type>> outputList){
+	public void add(Node n){
+		iterator = head;
 		
-		if(thisElement==null){		// rekrusionabbruch
-			return outputList;
+		switch( iterator.getContent().compareTo( n.getContent() )){			
+			
+		case 0:
+			break;
+		case -1:
+			break;
+		case 1:
+			break;
+			
 		}
 		
-		else{						// rekursionsaufru
-			outputList.add(branchLeft.thisElement);	//L
-			traverseInOrder(outputList);			//W
-			outputList.add(branchRight.thisElement);//R
-			return outputList;
+	}
+	
+	
+	class Node{
+		private Type content;
+		
+		private Node right = null;
+		private Node left = null;
+		private Node root = null;
+				
+		Node(Type content){
+			this.content = content;
 		}
+		
+		Node(Type content,Node root){
+			this.content = content;
+			this.root = root;
+		}
+		
+		
+		public Node getRight() {
+			return right;
+		}
+
+		public void setRight(Node right) {
+			this.right = right;
+		}
+
+		public Node getLeft() {
+			return left;
+		}
+
+		public void setLeft(Node left) {
+			this.left = left;
+		}
+
+		public Node getRoot() {
+			return root;
+		}
+
+		public void setRoot(Node root) {
+			this.root = root;
+		}
+
+		
+		public Type getContent() {
+			return content;
+		}
+
+		
+		public void setContent(Type content) {
+			this.content = content;
+		}
+		
+		
 	}
 
-	public List<Element<Type>> traversePostOrder(List<Element<Type>> outputList){
-		if(thisElement==null) return outputList;
-		outputList.add(branchLeft.thisElement);	//L
-		outputList.add(branchRight.thisElement);//R
-		traversePostOrder(outputList);			//W
-		return outputList;
-	}
-
-	public List<Element<Type>> traversePreOrder(List<Element<Type>> outputList){
-		if(thisElement == null) return outputList;
-		traversePreOrder(outputList);				//W
-		outputList.add(branchLeft.thisElement);		//L
-		outputList.add(branchRight.thisElement);	//R
-		return outputList;
-	}
-	
-	//TODO KlammerInOrderFehlt
-	
-	public String traverseKlammerInOrder(String outputString){
-		outputString += "(";
-		traverseInOrder(tempList);
-		if (tempList.toString() != null) outputString += tempList.toString();
-		outputString += ")";
-		tempList = null;
-		return outputString;
-	}
-	
-	public void traverseKlammerInOrderWriteStream(PrintStream stream){
-		PrintWriter pw = new PrintWriter(stream);
-		String outputString = "";
-		pw.println(traverseKlammerInOrder(outputString));
-	}
-	
-	public void traversePreOrderWriteStream(PrintStream stream){
-		PrintWriter pw = new PrintWriter(stream);
-		pw.println(traversePreOrder(outputList).toString());
-	}
-	
-	public void traversePostOrderWriteStream(PrintStream stream){
-		PrintWriter pw = new PrintWriter(stream);
-		pw.println(traversePostOrder(outputList).toString());
-	}
-	
-
-	
 }
 
 
