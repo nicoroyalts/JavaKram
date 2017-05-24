@@ -4,13 +4,13 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class BinaryTree <Type> {
+public class BinaryTree <Type extends Comparable<Type>> {
 
 	
-	private Element<Type> thisElement;
+	protected Element<Type> thisElement;
 	
-	private BinaryTree<Type> branchLeft;
-	private BinaryTree<Type> branchRight;
+	protected BinaryTree<Type> branchLeft;
+	protected BinaryTree<Type> branchRight;
 	
 	//Workaround:
 	List<Element<Type>> tempList = null;
@@ -58,11 +58,17 @@ public class BinaryTree <Type> {
 	}
 	
 	public List<Element<Type>> traverseInOrder(List<Element<Type>> outputList){
-		if(thisElement==null) return outputList;
-		outputList.add(branchLeft.thisElement);	//L
-		traverseInOrder(outputList);			//W
-		outputList.add(branchRight.thisElement);//R
-		return outputList;
+		
+		if(thisElement==null){		// rekrusionabbruch
+			return outputList;
+		}
+		
+		else{						// rekursionsaufru
+			outputList.add(branchLeft.thisElement);	//L
+			traverseInOrder(outputList);			//W
+			outputList.add(branchRight.thisElement);//R
+			return outputList;
+		}
 	}
 
 	public List<Element<Type>> traversePostOrder(List<Element<Type>> outputList){

@@ -1,6 +1,6 @@
 package BinaryTree;
 
-public class Element<Type> {
+public class Element<Type extends Comparable<Type>> {
 	
 	private Type content;
 	
@@ -13,5 +13,6 @@ public class Element<Type> {
 	
 	public Type getContent(){
 		return content;
-	}
+	}	
+
 }

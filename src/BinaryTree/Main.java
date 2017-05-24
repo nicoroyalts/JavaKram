@@ -4,13 +4,13 @@ package BinaryTree;
  * Suchbaum soll Wurzel haben
 Inhalt sind Integer
 linkerTeilbaum -> kleinere Zahlen
-rechter Teilbaum->größere Zahlen
+rechter Teilbaum->grï¿½ï¿½ere Zahlen
 Binarytree darf genutzt werden
-VORHER überlegen, wie LÖSCHEN aussehen muss
-	-> Fallunterscheidung (3 Fälle)
-EInfügen muss ausvorhanden sein
+VORHER ï¿½berlegen, wie Lï¿½SCHEN aussehen muss
+	-> Fallunterscheidung (3 Fï¿½lle)
+EInfï¿½gen muss ausvorhanden sein
 Wurzel
-Methoden suchen, einfügen und löschen
+Methoden suchen, einfï¿½gen und lï¿½schen
 
  */
 
