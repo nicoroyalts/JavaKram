@@ -1,32 +1,131 @@
-package BinaryTree;
+package lorenz;
 
+import java.util.Scanner;
 
 public class BinaryTree<Type extends Comparable<Type>>{
 
 	private Node head;
 	private Node iterator;
 	
-	public BinaryTree(Node head){		
-		this.head = head;
-		this.iterator = head;
+	public BinaryTree(Type head){		
+		this.head = new Node(head);
+		this.iterator = this.head;
 	}
 	
-	public void add(Node n){
-		iterator = head;
+	public void viewTree() {
 		
-		switch( iterator.getContent().compareTo( n.getContent() )){			
+		Scanner input = new Scanner(System.in);
+		iterator = head;
+		System.out.println(iterator.getContent().toString());	
+		
+		boolean exit = false;
+		while(!exit) {
+			switch(input.next()) {
 			
-		case 0:
-			break;
-		case -1:
-			break;
-		case 1:
-			break;
+			case "l":
+				if(iterator.getLeft() == null) {	
+					System.out.println("No left Node");	
+				}
+				else {
+					iterator = iterator.getLeft();
+					System.out.println(iterator.getContent().toString());
+				}
+				break;
 			
+			case "r":
+				if(iterator.getRight() == null) {	
+					System.out.println("No right Node");	
+				}
+				else {
+					iterator = iterator.getRight();
+					System.out.println(iterator.getContent().toString());					
+				}
+				break;
+			
+			case "u":
+				iterator = iterator.getRoot();
+				System.out.println(iterator.getContent().toString());					
+				break;
+			
+			default:
+				input.close();
+				exit = true;
+					
+			}			
 		}
 		
 	}
 	
+	public boolean add(Type n){
+		iterator = head;
+		
+		switch( iterator.getContent().compareTo( n )){			
+			
+		case 0:
+			System.out.println("Elemnt already exists");
+			return false;
+			
+		case 1:
+			if(iterator.left == null){
+				iterator.setLeft(new Node(n, iterator));
+				return true;
+			}
+			
+			iterator = iterator.left;
+			return add(n,iterator);
+			
+		case -1:
+			if(iterator.right == null){
+				iterator.setRight(new Node(n,iterator));
+				return true;
+			}
+			
+			iterator = iterator.right;
+			return add(n,iterator);
+			
+		default:
+			return false;
+		
+		}		
+	}
+	
+	private boolean add(Type n, Node iterator){
+		this.iterator = iterator;
+		
+		switch( iterator.getContent().compareTo( n )){			
+			
+		case 0:
+			System.out.println("Elemnt already exists");
+			return false;
+			
+		case 1:
+			if(iterator.left == null){
+				iterator.setLeft(new Node(n,iterator));
+				return true;
+			}
+			
+			iterator = iterator.left;
+			return add(n,iterator);
+			
+		case -1:
+			if(iterator.right == null){
+				iterator.setRight(new Node(n,iterator));
+				return true;
+			}
+			
+			iterator = iterator.right;
+			return add(n,iterator);
+			
+		default:
+			return false;
+		
+		}		
+	}
+
+	private Node searchNode(Type n) {
+		return null;
+		
+	}
 	
 	class Node{
 		private Type content;
@@ -68,12 +167,10 @@ public class BinaryTree<Type extends Comparable<Type>>{
 		public void setRoot(Node root) {
 			this.root = root;
 		}
-
 		
 		public Type getContent() {
 			return content;
 		}
-
 		
 		public void setContent(Type content) {
 			this.content = content;
@@ -82,7 +179,5 @@ public class BinaryTree<Type extends Comparable<Type>>{
 		
 	}
 
+	
 }
-
-
-
