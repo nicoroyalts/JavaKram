@@ -1,5 +1,6 @@
-package lorenz;
+package BinaryTree;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BinaryTree<Type extends Comparable<Type>>{
@@ -57,6 +58,12 @@ public class BinaryTree<Type extends Comparable<Type>>{
 	}
 	
 	public boolean add(Type n){
+		
+		if(head == null){
+			head = new Node(n);
+			return true;
+		}
+		
 		iterator = head;
 		
 		switch( iterator.getContent().compareTo( n )){			
@@ -122,9 +129,122 @@ public class BinaryTree<Type extends Comparable<Type>>{
 		}		
 	}
 
-	private Node searchNode(Type n) {
-		return null;
+	public boolean contains(Type n){
+		return (null != searchNode(n));
+	}
+
+	public Node cut(Type n){
 		
+		Node output = searchNode(n);
+		
+		if(output == null){
+			return output;
+		}
+		
+		if(output.getRoot() == null){
+			head = null;
+			return output;			
+		}
+		
+		iterator = output.getRoot();
+		
+		if(iterator.getLeft() == output){
+			iterator.setLeft(null);
+		}
+		if(iterator.getRight() == output){
+			iterator.setRight(null);
+		}
+		
+		output.setRoot(null);
+		
+		return output;
+	}
+	
+	public Node delete(Type n){
+		Node output = searchNode(n);
+		
+		if(output == null){
+			return output;
+		}
+		
+		if(output.getRoot() == null){
+			head = null;
+			output.getElements().forEach(e -> this.add(e.getContent()));
+			output.setLeft(null);
+			output.setRight(null);
+			output.setRoot(null);
+			return output;			
+		}
+		
+		iterator = output.getRoot();
+		
+		if(iterator.getLeft() == output){
+			iterator.setLeft(null);
+		}
+		
+		if(iterator.getRight() == output){
+			iterator.setRight(null);
+		}
+
+		output.getElements().forEach(e -> this.add(e.getContent()));
+		
+		output.setLeft(null);
+		output.setRight(null);
+		output.setRoot(null);
+		
+		return output;
+	}
+
+	private Node searchNode(Type n) {
+		
+		iterator = head;
+		
+		if(iterator == null){
+			return null;
+		}
+		
+		if(iterator.getContent().compareTo(n) == 0){
+			return iterator;
+		}
+
+		Node left  = searchNode(n, iterator.getLeft());
+		
+		if(left != null){
+			return left;			
+		}
+		
+		Node right = searchNode(n, iterator.getRight());			
+		
+		if(right != null){
+			return right;
+		}
+		
+		return null;
+	}
+	
+	private Node searchNode(Type n, Node iterator) {
+		
+		if(iterator == null){
+			return null;
+		}
+		
+		if(iterator.getContent().compareTo(n) == 0){
+			return iterator;
+		}
+
+		Node left  = searchNode(n, iterator.getLeft());
+		
+		if(left != null){
+			return left;			
+		}
+		
+		Node right = searchNode(n, iterator.getRight());			
+		
+		if(right != null){
+			return right;
+		}
+		
+		return null;
 	}
 	
 	class Node{
@@ -176,6 +296,34 @@ public class BinaryTree<Type extends Comparable<Type>>{
 			this.content = content;
 		}
 		
+		public ArrayList<Node> getElements(){
+			ArrayList<Node> output = new ArrayList<Node>();
+			
+			if(right != null){
+				output.addAll(right.getElementsIncludingThis());
+			}
+			
+			if(left != null){
+				output.addAll(left.getElementsIncludingThis());
+			}
+			
+			return output;
+		}		
+		
+		public ArrayList<Node> getElementsIncludingThis(){
+			ArrayList<Node> output = new ArrayList<Node>();
+			output.add(this);
+			
+			if(right != null){
+				output.addAll(right.getElements());
+			}
+			
+			if(left != null){
+				output.addAll(left.getElements());
+			}
+			
+			return output;
+		}
 		
 	}
 
